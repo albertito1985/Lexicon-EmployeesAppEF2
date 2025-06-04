@@ -36,13 +36,13 @@ internal class Program
         employeeService = new(unitOfWork);
 
         await DeleteCompany(1);
-        await ListAllEmployeesAsync();
-        await ListEmployeeAsync(562);
+        //await ListAllEmployeesAsync();
+        //await ListEmployeeAsync(562);
     }
 
     private static async Task DeleteCompany(int v)
     {
-        companyService.DeleteAsync(v);
+        await companyService.DeleteAsync(v);
     }
 
     private static async Task ListAllEmployeesAsync()
