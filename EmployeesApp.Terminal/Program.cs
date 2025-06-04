@@ -1,15 +1,16 @@
-﻿using EmployeesApp.Infrastructure.Persistance;
+﻿using EmployeesApp.Application.Employees.Interfaces;
 using EmployeesApp.Application.Employees.Services;
 using EmployeesApp.Domain.Entities;
+using EmployeesApp.Infrastructure.Persistance;
 using EmployeesApp.Infrastructure.Persistance.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using EmployeesApp.Application.Employees.Interfaces;
 
 namespace EmployeesApp.Terminal;
 internal class Program
 {
     static EmployeeService employeeService;
+    static CompanyService companyService;
     static IUnitOfWork unitOfWork;
 
     static async Task Main(string[] args)
@@ -28,14 +29,20 @@ internal class Program
 
         // Create and use the context
         var context = new ApplicationContext(options);
-       
 
-        unitOfWork= new UnitOfWork(new EmployeeRepository(context), new CompanyRepository(context), context);
 
-        employeeService = new (unitOfWork) ;
+        unitOfWork = new UnitOfWork(new EmployeeRepository(context), new CompanyRepository(context), context);
+        companyService = new CompanyService(unitOfWork);
+        employeeService = new(unitOfWork);
 
+        await DeleteCompany(1);
         await ListAllEmployeesAsync();
         await ListEmployeeAsync(562);
+    }
+
+    private static async Task DeleteCompany(int v)
+    {
+        companyService.DeleteAsync(v);
     }
 
     private static async Task ListAllEmployeesAsync()
