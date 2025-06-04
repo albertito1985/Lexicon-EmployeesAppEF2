@@ -19,5 +19,15 @@ namespace EmployeesApp.Infrastructure.Persistance.Repositories
 
         public async Task<Employee?> GetByIdAsync(int id) => await context.Employees
             .FindAsync(id);
+
+        public async Task DeleteAsync(Employee employee)
+        {
+            if (employee is null)
+            {
+                throw new ArgumentNullException(nameof(employee), "Employee cannot be null");
+            }
+            context.Employees.Remove(employee);
+            //await context.SaveChangesAsync();
+        }
     }
 }
