@@ -4,11 +4,13 @@ using EmployeesApp.Domain.Entities;
 using EmployeesApp.Infrastructure.Persistance.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using EmployeesApp.Application.Employees.Interfaces;
 
 namespace EmployeesApp.Terminal;
 internal class Program
 {
     static EmployeeService employeeService;
+    static IUnitOfWork unitOfWork;
 
     static async Task Main(string[] args)
     {
@@ -26,7 +28,11 @@ internal class Program
 
         // Create and use the context
         var context = new ApplicationContext(options);
-        employeeService = new(new EmployeeRepository(context));
+       
+
+        unitOfWork= new UnitOfWork(new EmployeeRepository(context), new CompanyRepository(context), context);
+
+        employeeService = new (unitOfWork) ;
 
         await ListAllEmployeesAsync();
         await ListEmployeeAsync(562);
