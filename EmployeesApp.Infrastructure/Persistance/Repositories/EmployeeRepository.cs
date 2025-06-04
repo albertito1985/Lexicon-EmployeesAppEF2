@@ -20,7 +20,7 @@ namespace EmployeesApp.Infrastructure.Persistance.Repositories
         public async Task<Employee?> GetByIdAsync(int id) => await context.Employees
             .FindAsync(id);
 
-        public async Task DeleteAsync(Employee employee)
+        public void Delete(Employee employee)
         {
             if (employee is null)
             {

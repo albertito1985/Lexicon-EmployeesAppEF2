@@ -16,7 +16,7 @@ namespace EmployeesApp.Application.Employees.Services
             var employees = await unitOfWork.EmployeeRepository.GetAllAsync();
             foreach (var employee in employees)
             {
-                await unitOfWork.EmployeeRepository.DeleteAsync(employee);
+                unitOfWork.EmployeeRepository.Delete(employee);
             }
             // Then delete the company itself
             await unitOfWork.CompanyRepository.DeleteAsync(companyId); // Assuming companyId is available

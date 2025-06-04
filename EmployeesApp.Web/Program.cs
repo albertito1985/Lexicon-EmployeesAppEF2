@@ -14,9 +14,12 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddControllersWithViews();
+        builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
+        builder.Services.AddScoped<ICompanyService, CompanyService>();
         builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
         builder.Services.AddScoped<IEmployeeService, EmployeeService>();
         builder.Services.AddScoped<MyLogServiceFilterAttribute>();
+        builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         // Hämta connection-strängen från AppSettings.json​
         var connString = builder.Configuration.GetConnectionString("DefaultConnection");

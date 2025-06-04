@@ -40,6 +40,6 @@ public class EmployeeService(IUnitOfWork unitOfWork) : IEmployeeService
         {
             throw new ArgumentException($"Invalid parameter value: {id}", nameof(id));
         }
-        await unitOfWork.EmployeeRepository.DeleteAsync(employee);
+        unitOfWork.EmployeeRepository.Delete(employee);
     }
 }
