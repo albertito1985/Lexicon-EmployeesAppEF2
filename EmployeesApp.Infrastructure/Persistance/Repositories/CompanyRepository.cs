@@ -12,10 +12,10 @@ namespace EmployeesApp.Infrastructure.Persistance.Repositories
     {
         public async Task<Company> GetAsync(int companyId)
         {
-            
+            return await context.Companies.FindAsync(companyId);
         }
 
-        public async Task Remove(int companyId)
+        public async Task DeleteAsync(int companyId)
         {
 
         }
